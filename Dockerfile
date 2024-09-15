@@ -12,16 +12,17 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir /app/ETCMC
 
 # Download and unzip the application code into /app/code
-RUN curl -O -L https://github.com/Nowalski/ETCMC_Software/releases/download/Setup%2FWindows/ETCMC_Linux.zip
-RUN unzip ETCMC_Linux.zip -d /app/ETCMC
-
-RUN chmod -R 777 /app/ETCMC
+RUN curl -O -L https://github.com/Nowalski/ETCMC_Software/releases/download/Setup%2FWindows/ETCMC_Linux.zip \
+    && unzip ETCMC_Linux.zip -d ETCMC \
+    && chmod -R 777 ETCMC \
+    && rm -f ETCMC_Linux.zip  # Remove the zip file after extraction
 
 # Change to the etcmcnodecheck directory and download the nodecheck client
 RUN mkdir -p /app/bot-nodecheck-telgram \
     && cd /app/bot-nodecheck-telgram \
     && curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
-    && tar -xvf etcmcnodecheck-linux-v0.10.tar
+    && tar -xvf etcmcnodecheck-linux-v0.10.tar \
+    %% rm -f etcmcnodecheck-linux-v0.10.tar
 
 RUN chmod -R 777 /app/bot-nodecheck-telgram/Etcmcnodecheck
 

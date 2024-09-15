@@ -18,8 +18,8 @@ RUN unzip ETCMC_Linux.zip -d /app/ETCMC
 RUN chmod -R 777 /app/ETCMC
 
 # Change to the etcmcnodecheck directory and download the nodecheck client
-RUN mkdir -p /app/nodechecker-telegram
-RUN cd /app/nodechecker-telegram
+RUN mkdir -p /app/Etcmcnodecheck
+RUN cd /app/Etcmcnodecheck
 RUN curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar
 RUN tar -xvf etcmcnodecheck-linux-v0.10.tar
 
@@ -27,8 +27,8 @@ RUN chmod -R 777 Etcmcnodecheck
 
 
 # Pre-configure the monitoring ID file with a default ID
-#RUN chmod -R 777 Etcmcnodecheck \
-#&& echo 012345678-mynode01 > /app/nodechecker-telegram/Etcmcnodecheck/etcmcnodemonitoringid.txt
+RUN chmod -R 777 Etcmcnodecheck \
+&& echo 012345678-mynode01 > /app/Etcmcnodecheck/etcmcnodemonitoringid.txt
 
 WORKDIR /app/ETCMC
 
@@ -42,4 +42,4 @@ VOLUME /app/nodechecker-telegram
 EXPOSE 5000
 
 # Start both ETCMC and the nodecheck client on container boot
-CMD ["sh", "-c", "python Linux.py start --port 5000 & cd /app/nodechecker-telegram/Etcmcnodecheck && ./check-node.sh & tail -f /dev/null"]
+CMD ["sh", "-c", "python Linux.py start --port 5000 & cd /app/Etcmcnodecheck && ./check-node.sh & tail -f /dev/null"]

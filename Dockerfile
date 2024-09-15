@@ -17,13 +17,14 @@ RUN curl -O -L https://github.com/Nowalski/ETCMC_Software/releases/download/Setu
     && chmod -R 777 ETCMC \
     && rm -f ETCMC_Linux.zip  # Remove the zip file after extraction
 
-# Change to the etcmcnodecheck directory and download the nodecheck client
-RUN mkdir -p /app/bot-nodecheck-telgram \
-    && cd /app/bot-nodecheck-telgram \
-    && curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
-    && tar -xvf etcmcnodecheck-linux-v0.10.tar
+# Create a separate directory for your application code
+RUN mkdir /app/Etcmcnodecheck
 
-RUN chmod -R 777 /app/bot-nodecheck-telgram/Etcmcnodecheck
+# Change to the etcmcnodecheck directory and download the nodecheck client
+RUN curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
+    && tar -xvf etcmcnodecheck-linux-v0.10.tar \
+    && chmod -R 777 Etcmcnodecheck \
+    %% rm -f etcmcnodecheck-linux-v0.10.tar
 
 # Pre-configure the monitoring ID file with a default ID
 RUN echo 012345678-mynode01 > /app/bot-nodecheck-telgram/Etcmcnodecheck/etcmcnodemonitoringid.txt
@@ -40,4 +41,4 @@ VOLUME /app/bot-nodecheck-telgram/Etcmcnodecheck
 EXPOSE 5000
 
 # Start both ETCMC and the nodecheck client on container boot
-CMD ["sh", "-c", "python Linux.py start --port 5000 & cd /app/bot-nodecheck-telgram/Etcmcnodecheck && ./check-node.sh & tail -f /dev/null"]
+CMD ["sh", "-c", "python Linux.py start --port 5000 & cd /app/Etcmcnodecheck && ./check-node.sh & tail -f /dev/null"]

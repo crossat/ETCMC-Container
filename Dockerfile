@@ -20,7 +20,7 @@ RUN chmod -R 777 /app/ETCMC
 # Change to the etcmcnodecheck directory and download the nodecheck client
 RUN mkdir -p /app/nodechecker-telegram \
     && cd /app/nodechecker-telegram \
-    && wget https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.60.tar \
+    && wget https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
     && tar -xvf etcmcnodecheck-linux-v0.10.tar \
     && chmod -R 777 Etcmcnodecheck
 

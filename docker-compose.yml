@@ -6,4 +6,13 @@ services:
     container_name: etcmc-node01  # Name of the container to be run
     ports:
       - "5001:5000"  # Map the internal port 5000 to the host
+    volumes:
+      - etcmc_data:/app/ETCMC  # Map /app/ETCMC to a named volume
+      - bot_telegram_data:/app/bot-nodecheck-telgram/Etcmcnodecheck
     restart: unless-stopped  # Automatically restart the container unless manually stopped
+
+volumes:
+  etcmc_data:
+    name: etcmc_data # Explicitly name the volume
+  bot_telegram_data:
+    name: bot_telegram_data

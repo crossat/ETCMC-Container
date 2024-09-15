@@ -31,7 +31,7 @@ jobs:
           context: .
           file: ./Dockerfile  # Path to your Dockerfile
           push: true
-          tags: crossat/etcmc-container:latest
+          tags: crossat/ETCMC-Dockerfile:latest
 
       - name: Post build info
         run: echo "Docker image built and pushed to Docker Hub"

@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  etcmc-node-01:
+    image: vigiflyer/etcmc-container:latest
+    container_name: etcmc-node01  # Name of the container to be run
+    ports:
+      - "5001:5000"  # Map the internal port 5000 to the host
+    restart: unless-stopped  # Automatically restart the container unless manually stopped

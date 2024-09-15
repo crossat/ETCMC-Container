@@ -1,0 +1,54 @@
+name: Check ETCMC Software is updated and Build Docker Image
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Runs every day at midnight (adjust as needed)
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  check_file_and_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check if the file has changed by comparing its checksum
+      - name: Check if ECTMC_Linux.zip file has changed
+        id: check_file
+        run: |
+          # Download the file and compute its SHA256 hash
+          curl -O -L https://github.com/Nowalski/ETCMC_Software/releases/download/Setup%2FWindows/ETCMC_Linux.zip
+          sha256sum ETCMC_Linux.zip > new_checksum.txt
+
+          # Compare the new checksum with the stored checksum
+          if [ -f old_checksum.txt ]; then
+            diff -q new_checksum.txt old_checksum.txt || echo "File has changed"
+          else
+            echo "File has changed"
+          fi
+
+      # Step 2: If the file has changed, continue with the build
+      - name: Check if file changed
+        if: steps.check_file.outputs.result != 'File has changed'
+        run: echo "No changes detected, skipping build."
+
+      # Step 3: If the file changed, trigger Docker build and push
+      - name: Log in to Docker Hub
+        if: steps.check_file.outputs.result == 'File has changed'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.check_file.outputs.result == 'File has changed'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: your-dockerhub-username/etcmc-container:latest
+
+      # Step 4: Save the new checksum for future comparisons
+      - name: Save new checksum
+        if: steps.check_file.outputs.result == 'File has changed'
+        run: |
+          cp new_checksum.txt old_checksum.txt

@@ -24,7 +24,7 @@ RUN mkdir /app/Etcmcnodecheck
 RUN curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
     && tar -xvf etcmcnodecheck-linux-v0.10.tar \
     && chmod -R 777 Etcmcnodecheck \
-    %% rm -f etcmcnodecheck-linux-v0.10.tar
+    && rm -f etcmcnodecheck-linux-v0.10.tar
 
 # Pre-configure the monitoring ID file with a default ID
 RUN echo 012345678-mynode01 > /app/bot-nodecheck-telgram/Etcmcnodecheck/etcmcnodemonitoringid.txt

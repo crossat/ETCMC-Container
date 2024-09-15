@@ -21,8 +21,7 @@ RUN curl -O -L https://github.com/Nowalski/ETCMC_Software/releases/download/Setu
 RUN mkdir -p /app/bot-nodecheck-telgram \
     && cd /app/bot-nodecheck-telgram \
     && curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
-    && tar -xvf etcmcnodecheck-linux-v0.10.tar \
-    %% rm -f etcmcnodecheck-linux-v0.10.tar
+    && tar -xvf etcmcnodecheck-linux-v0.10.tar
 
 RUN chmod -R 777 /app/bot-nodecheck-telgram/Etcmcnodecheck
 

@@ -35,7 +35,7 @@ RUN pip install -r requirements.txt
 
 # Declare /app/ETCMC as a volume for persistent storage
 VOLUME /app/ETCMC
-VOLUME /app/bot-nodecheck-telgram/Etcmcnodecheck
+VOLUME /app/Etcmcnodecheck
 
 
 EXPOSE 5000

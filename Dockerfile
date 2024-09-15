@@ -18,17 +18,14 @@ RUN unzip ETCMC_Linux.zip -d /app/ETCMC
 RUN chmod -R 777 /app/ETCMC
 
 # Change to the etcmcnodecheck directory and download the nodecheck client
-RUN mkdir -p /app/Etcmcnodecheck
-RUN cd /app/Etcmcnodecheck
-RUN curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar
-RUN tar -xvf etcmcnodecheck-linux-v0.10.tar
-
-RUN chmod -R 777 Etcmcnodecheck
-
+RUN mkdir -p /app/Etcmcnodecheck \
+    && cd /app/Etcmcnodecheck \
+    && curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-linux-v0.10.tar \
+    && tar -xvf etcmcnodecheck-linux-v0.10.tar \
+    && chmod -R 777 Etcmcnodecheck
 
 # Pre-configure the monitoring ID file with a default ID
-RUN chmod -R 777 Etcmcnodecheck \
-&& echo 012345678-mynode01 > /app/Etcmcnodecheck/etcmcnodemonitoringid.txt
+RUN echo 012345678-mynode01 > /app/Etcmcnodecheck/etcmcnodemonitoringid.txt
 
 WORKDIR /app/ETCMC
 
@@ -36,7 +33,7 @@ RUN pip install -r requirements.txt
 
 # Declare /app/ETCMC as a volume for persistent storage
 VOLUME /app/ETCMC
-VOLUME /app/nodechecker-telegram
+VOLUME /app/Etcmcnodecheck
 
 
 EXPOSE 5000

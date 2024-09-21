@@ -39,7 +39,6 @@ RUN pip install -r requirements.txt
 VOLUME /app/ETCMC
 VOLUME /app/Etcmcnodecheck
 
-
 EXPOSE 5000
 
 # Start both ETCMC and the nodecheck client on container boot

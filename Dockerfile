@@ -29,6 +29,8 @@ RUN curl -O -L https://etcmcnodecheck.apritec.dev/files-linux/etcmcnodecheck-lin
 # Pre-configure the monitoring ID file with a default ID
 RUN echo 012345678-mynode01 > /app/Etcmcnodecheck/etcmcnodemonitoringid.txt
 
+RUN cp ./check-node.sh /app/etcmcnodecheck/check-node.sh
+
 WORKDIR /app/ETCMC
 
 RUN pip install -r requirements.txt
